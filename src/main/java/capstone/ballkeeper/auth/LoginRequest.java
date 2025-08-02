@@ -1,13 +1,11 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupRequest {
+public class LoginRequest {
     private String studentId;
-    private String name;
     private String password;
-    private String phone;
 }

@@ -1,4 +1,4 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

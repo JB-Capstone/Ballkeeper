@@ -1,4 +1,4 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

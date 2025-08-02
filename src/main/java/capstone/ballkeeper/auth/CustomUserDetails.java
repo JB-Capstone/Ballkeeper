@@ -1,5 +1,6 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
+import capstone.ballkeeper.domain.member.Member;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +11,10 @@ import java.util.Collections;
 @Getter
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final Member member;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
+    public CustomUserDetails(Member member) {
+        this.member = member;
     }
 
     @Override
@@ -23,12 +24,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();  // 로그인 시 비밀번호 확인용
+        return member.getPassword();  // 로그인 시 비밀번호 확인용
     }
 
     @Override
     public String getUsername() {
-        return user.getStudentId();  // Spring Security에서 식별자로 사용됨
+        return member.getStudentId();  // Spring Security에서 식별자로 사용됨
     }
 
     @Override

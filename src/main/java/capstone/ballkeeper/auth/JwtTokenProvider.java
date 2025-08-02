@@ -1,4 +1,4 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

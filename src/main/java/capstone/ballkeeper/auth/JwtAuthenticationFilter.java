@@ -1,4 +1,4 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
