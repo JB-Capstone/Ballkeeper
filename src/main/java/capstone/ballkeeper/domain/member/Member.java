@@ -1,26 +1,29 @@
-package capstone.ballkeeper;
+package capstone.ballkeeper.domain.member;
 
+import capstone.ballkeeper.domain.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Long memberId;
 
     @Column(name = "student_id", nullable = false, unique = true)
     private String studentId;
@@ -40,6 +43,9 @@ public class User implements UserDetails {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
     // --- UserDetails 구현 메서드 ---
 
