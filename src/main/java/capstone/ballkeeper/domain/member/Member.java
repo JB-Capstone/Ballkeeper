@@ -45,6 +45,7 @@ public class Member implements UserDetails {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Reservation> reservations = new ArrayList<>();
 
     // --- UserDetails 구현 메서드 ---
