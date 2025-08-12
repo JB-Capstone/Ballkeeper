@@ -11,14 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "item")
+@Table(name = "ITEMS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name = "ITEM_ID")
     private Long id;
+
+    @OneToMany(mappedBy = "item")
+    private List<ReservationItem> reservationItems = new ArrayList<>();
 
     @Column(length = 20, nullable = false)
     private String name;
@@ -30,15 +33,12 @@ public class Item {
     @Column(length = 20, nullable = false)
     private ItemStatus status;
 
-    @Column(name = "image_url", length = 100)
+    @Column(name = "IMAGE_URL", length = 100)
     private String imageUrl;
 
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReservationItem> reservationItems = new ArrayList<>();
 
     // 생성 메서드
     public static Item registerItem(String name, String description, ItemStatus status) {

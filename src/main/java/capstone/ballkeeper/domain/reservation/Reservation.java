@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "reservation")
+@Table(name = "RESERVATIONS")
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
@@ -29,15 +29,15 @@ public class Reservation {
     private Member member;
 
     // 예약된 물품들과의 다대다 중간 테이블
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reservation")
     private List<ReservationItem> reservationItems = new ArrayList<>();
 
     // 예약 시각
-    @Column(name = "start_time")
+    @Column(name = "START_TIME")
     private LocalDateTime startTime;
 
     // 종료 시각
-    @Column(name = "end_time")
+    @Column(name = "END_TIME")
     private LocalDateTime endTime;
 
     // 예약 상태
@@ -45,27 +45,27 @@ public class Reservation {
     private ReservationStatus status;
 
     // 예약자 물품 수령 시각
-    @Column(name = "pickup_time")
+    @Column(name = "PICKUP_TIME")
     private LocalDateTime pickupTime;
 
     // 수령 인증 사진
-    @Column(name = "pickup_photo_url", length = 200)
+    @Column(name = "PICKUP_PHOTO_URL", length = 200)
     private String pickupPhotoUrl;
 
     // 관리자 승인 여부
-    @Column(name = "usage_status")
+    @Column(name = "USAGE_STATUS")
     @Enumerated(EnumType.STRING)
     private UsageStatus usageStatus;
 
     // 관리자 승인 시각
-    @Column(name = "usage_at")
+    @Column(name = "USAGE_AT")
     private LocalDateTime usageAt;
 
     // 반납 시각
-    @Column(name = "return_time")
+    @Column(name = "RETURN_TIME")
     private LocalDateTime returnTime;
 
-    @Column(name = "return_photo_url", length = 200)
+    @Column(name = "RETURN_PHOTO_URL", length = 200)
     private String returnPhotoUrl;
 
     // 생성 메서드
