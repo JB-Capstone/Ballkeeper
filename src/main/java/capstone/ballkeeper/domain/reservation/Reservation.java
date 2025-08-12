@@ -3,6 +3,7 @@ package capstone.ballkeeper.domain.reservation;
 import capstone.ballkeeper.domain.ReservationItem;
 import capstone.ballkeeper.domain.UsageStatus;
 import capstone.ballkeeper.domain.member.Member;
+import capstone.ballkeeper.domain.notification.Notification;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,13 +21,17 @@ import java.util.List;
 public class Reservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
+    @Column(name = "RESERVATION_ID")
     private Long id;
 
     // 회원과의 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "USER_ID")
     private Member member;
+
+    // 알림과의 연관관계
+    @OneToMany(mappedBy = "reservation")
+    private List<Notification> notifications = new ArrayList<>();
 
     // 예약된 물품들과의 다대다 중간 테이블
     @OneToMany(mappedBy = "reservation")
@@ -68,21 +73,14 @@ public class Reservation {
     @Column(name = "RETURN_PHOTO_URL", length = 200)
     private String returnPhotoUrl;
 
-    // 생성 메서드
-    public static Reservation createReservation(Member member, LocalDateTime startTime, LocalDateTime endTime, ReservationStatus status, UsageStatus usageStatus) {
-        Reservation reservation = new Reservation();
-        reservation.member = member;
-        reservation.startTime = startTime;
-        reservation.endTime = endTime;
-        reservation.status = status;
-        reservation.usageStatus = usageStatus;
-
-        return reservation;
+    // 연관 관계 편의 메서드
+    public void setMember(Member member) {
+        this.member = member;
+        if (!member.getReservations().contains(this)) {
+            member.getReservations().add(this);
+        }
     }
 
-    /*
-    * 연관관계 메서드
-    * */
     public void addReservationItem(ReservationItem item) {
         reservationItems.add(item);
         item.setReservation(this);
@@ -105,5 +103,10 @@ public class Reservation {
     public void updateUsageStatus(UsageStatus usageStatus, LocalDateTime usageAt) {
         this.usageStatus = usageStatus;
         this.usageAt = usageAt;
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+        notification.setReservation(this);
     }
 }

@@ -7,38 +7,39 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "notification")
-@Getter
+@Table(name = "NOTIFICATIONS")
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Notification {
 
     @Id @GeneratedValue
-    @Column(name = "notification_id")
+    @Column(name = "NOTIFICATION_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", nullable = false)
+    @JoinColumn(name = "RESERVATION_ID", nullable = false)
     private Reservation reservation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "ITEM_ID")
     private Item item;
 
     @Column(length = 100, nullable = false)
     private String message;
 
-    @Column(name = "photo_url", length = 100)
+    @Column(name = "PHOTO_URL", length = 100)
     private String photoUrl;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
 
     // 생성 메서드

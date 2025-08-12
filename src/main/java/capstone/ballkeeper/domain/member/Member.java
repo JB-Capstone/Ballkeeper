@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -22,10 +22,13 @@ public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long memberId;
+    @Column(name = "USER_ID")
+    private Long id;
 
-    @Column(name = "student_id", nullable = false, unique = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @Column(name = "STUDENT_ID", nullable = false, unique = true)
     private String studentId;
 
     @Column(nullable = false)
@@ -44,9 +47,16 @@ public class Member implements UserDetails {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Reservation> reservations = new ArrayList<>();
+    // 연관 관계 편의 메서드
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+        reservation.setMember(this);
+    }
+
+    public void removeReservation(Reservation reservation) {
+        reservations.remove(reservation);
+        reservation.setMember(null);
+    }
 
     // --- UserDetails 구현 메서드 ---
 
