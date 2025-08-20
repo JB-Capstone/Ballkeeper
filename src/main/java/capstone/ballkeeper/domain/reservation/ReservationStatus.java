@@ -5,4 +5,5 @@ public enum ReservationStatus {
     RESERVED,  // 예약됨
     IN_USE,    // 사용 중
     COMPLETED, // 반납 완료
+    CANCELLED // 예약 취소
 }
