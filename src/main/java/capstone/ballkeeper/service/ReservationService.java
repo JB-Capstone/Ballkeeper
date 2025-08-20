@@ -67,6 +67,11 @@ public class ReservationService {
         return reservation.getId();
     }
 
+    // 예약 단건 조회 메서드
+    public Reservation findReservation(Long reservationId) {
+        return reservationRepository.findOne(reservationId);
+    }
+
     /**
      * 예약 취소
      */
